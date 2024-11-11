@@ -10,7 +10,7 @@ class Address extends Model
 {
     use HasFactory;
 
-    public function owner(): BelongsTo
+    public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
     }

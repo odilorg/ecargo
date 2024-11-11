@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function owner(): BelongsTo
+    public function packages(): BelongsTo
     {
         return $this->belongsTo(Package::class);
     }

@@ -23,7 +23,18 @@ class PackageResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('tracking_number')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('purchase_source')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('client_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -31,7 +42,23 @@ class PackageResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('tracking_number')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('purchase_source')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('client_id')
+                    ->numeric()
+                    ->sortable(),
             ])
             ->filters([
                 //

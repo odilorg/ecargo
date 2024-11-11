@@ -23,7 +23,55 @@ class AddressResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('client_id')
+    ->relationship('client', 'full_name')
+    ->searchable()
+    ->preload()
+    ->required(),
+                Forms\Components\TextInput::make('address_name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('first_name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('last_name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('paternal_name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('street')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('house_number')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('apartment_number')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('country')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('region')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('city')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('phone')
+                    ->tel()
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('id_number')
+                    ->label('Passport or Id number')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('pinfl')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('extra_info')
+                    ->maxLength(255),
+                
             ]);
     }
 
@@ -31,7 +79,44 @@ class AddressResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('address_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('first_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('last_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('paternal_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('street')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('house_number')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('apartment_number')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('country')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('region')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('city')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('id_number')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('pinfl')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('extra_info')
+                    ->searchable(),
+                
             ])
             ->filters([
                 //

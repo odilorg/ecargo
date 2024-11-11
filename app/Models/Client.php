@@ -10,7 +10,7 @@ class Client extends Model
 {
     use HasFactory;
 
-    public function patients(): HasMany
+    public function packages(): HasMany
     {
         return $this->hasMany(Package::class);
     }
