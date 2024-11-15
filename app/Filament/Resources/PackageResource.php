@@ -5,15 +5,19 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Package;
+use Filament\Forms\Get;
+use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Support\Collection;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PackageResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PackageResource\RelationManagers;
+use App\Models\Subcategory;
 
 class PackageResource extends Resource
 {
@@ -51,12 +55,21 @@ class PackageResource extends Resource
                         Section::make('Product details')
                             
                             ->schema([
-                                Forms\Components\TextInput::make('category')
-                                    ->required()
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('sub_category')
-                                    ->required()
-                                    ->maxLength(255),
+                                Forms\Components\Select::make('category_id')
+                                    ->relationship('category', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->live()
+                                    ->required(),
+                                Forms\Components\Select::make('sub_category')
+                                ->options(function (callable $get) {
+                                    $categoryId = $get('category_id');
+                                    return Subcategory::where('category_id', $categoryId)->pluck('name', 'id');
+                                })
+                                    ->searchable()
+                                    ->preload()
+                                    ->required(),
+                                    
                                 Forms\Components\TextInput::make('product_name')
                                     ->required()
                                     ->maxLength(255),
