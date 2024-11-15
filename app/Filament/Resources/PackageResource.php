@@ -19,7 +19,8 @@ class PackageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    protected static ?string $navigationGroup = 'Shipment';
+     public static function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -32,9 +33,7 @@ class PackageResource extends Resource
                 Forms\Components\TextInput::make('purchase_source')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('client_id')
-                    ->required()
-                    ->numeric(),
+               
             ]);
     }
 
@@ -76,7 +75,7 @@ class PackageResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ProductsRelationManager::class,
         ];
     }
 
