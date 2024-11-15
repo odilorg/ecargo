@@ -21,6 +21,8 @@ class ProductResource extends Resource
 
     protected static ?string $navigationGroup = 'Shipment';
 
+    protected static ?string $navigationLabel = 'Declarations';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -40,9 +42,7 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('package_id')
-                    ->required()
-                    ->numeric(),
+               
             ]);
     }
 

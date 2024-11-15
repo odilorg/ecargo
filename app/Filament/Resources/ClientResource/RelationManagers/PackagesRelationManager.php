@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\PackageResource\RelationManagers;
+namespace App\Filament\Resources\ClientResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -10,39 +10,37 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProductsRelationManager extends RelationManager
+class PackagesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'products';
+    protected static string $relationship = 'packages';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('category')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('sub_category')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('product_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('quantity')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('amount')
-                    ->required()
-                    ->numeric(),
-               
+                Forms\Components\TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('tracking_number')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('purchase_source')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\Select::make('client_id')
+                ->relationship('client', 'full_name')
+                ->searchable()
+                ->preload()
+                ->required(),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('product_name')
+            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('product_name'),
+                Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
                 //

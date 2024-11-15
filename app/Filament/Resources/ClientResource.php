@@ -78,6 +78,7 @@ class ClientResource extends Resource
     {
         return [
             RelationManagers\AddressesRelationManager::class,
+            RelationManagers\PackagesRelationManager::class,
         ];
     }
 
