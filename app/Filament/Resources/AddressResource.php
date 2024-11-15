@@ -24,10 +24,10 @@ class AddressResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('client_id')
-    ->relationship('client', 'full_name')
-    ->searchable()
-    ->preload()
-    ->required(),
+                    ->relationship('client', 'full_name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('address_name')
                     ->required()
                     ->maxLength(255),

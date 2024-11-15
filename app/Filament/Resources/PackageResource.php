@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PackageResource\Pages;
-use App\Filament\Resources\PackageResource\RelationManagers;
-use App\Models\Package;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Package;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\PackageResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PackageResource\RelationManagers;
 
 class PackageResource extends Resource
 {
@@ -20,7 +22,7 @@ class PackageResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Shipment';
-     public static function form(Form $form): Form
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -38,7 +40,39 @@ class PackageResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-               
+
+                Repeater::make('products')
+                    ->relationship()
+                    ->label('Declaration')
+                    ->schema([
+                        Section::make('Product details')
+                            
+                            ->schema([
+                                Forms\Components\TextInput::make('category')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('sub_category')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('product_name')
+                                    ->required()
+                                    ->maxLength(255),
+                            ])->columns(3),
+
+                        Section::make('Add quantity')
+                            
+                            ->schema([
+                                Forms\Components\TextInput::make('quantity')
+                                    ->required()
+                                    ->numeric(),
+                                Forms\Components\TextInput::make('amount')
+                                    ->required()
+                                    ->numeric(),
+                            ])->columns(2),
+
+
+                    ])->columnSpanFull()
+
             ]);
     }
 
@@ -60,7 +94,7 @@ class PackageResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('purchase_source')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('client_id')
+                Tables\Columns\TextColumn::make('client.full_name')
                     ->numeric()
                     ->sortable(),
             ])

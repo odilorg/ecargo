@@ -27,11 +27,7 @@ class PackagesRelationManager extends RelationManager
             Forms\Components\TextInput::make('purchase_source')
                 ->required()
                 ->maxLength(255),
-            Forms\Components\Select::make('client_id')
-                ->relationship('client', 'full_name')
-                ->searchable()
-                ->preload()
-                ->required(),
+            
             ]);
     }
 

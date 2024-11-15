@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Models\Product;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Product;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ProductResource\RelationManagers;
 
 class ProductResource extends Resource
 {
@@ -27,6 +28,11 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('package_id')
+                    ->relationship('package', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('category')
                     ->required()
                     ->maxLength(255),
@@ -42,6 +48,8 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric(),
+               
+
                
             ]);
     }
@@ -70,9 +78,10 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('amount')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('package_id')
+                Tables\Columns\TextColumn::make('package.client.full_name')
                     ->numeric()
                     ->sortable(),
+
             ])
             ->filters([
                 //
@@ -80,11 +89,13 @@ class ProductResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
+            
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+            
     }
 
     public static function getRelations(): array
@@ -93,7 +104,12 @@ class ProductResource extends Resource
             //
         ];
     }
-
+    protected function getActions(): array
+    {
+        return [
+            //  Actions\CreateAction::make(),
+        ];
+    }
     public static function getPages(): array
     {
         return [
