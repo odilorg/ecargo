@@ -23,6 +23,11 @@ class OdilorgPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+        ->navigationGroups([
+            'Shipment',
+            'Categories',
+            
+        ])
             ->default()
             ->id('odilorg')
             ->path('odilorg')
