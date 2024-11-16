@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\HomePage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('filament.odilorg.auth.login');
-});
+// Route::get('/', function () {
+//     return redirect()->route('filament.odilorg.auth.login');
+// });
+
+Route::get('/', HomePage::class);
