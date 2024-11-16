@@ -2,9 +2,9 @@
 export default {
   content: [
     "./src/**/*.{html,js}",
+    "./resources/**/*.blade.php",
     "./resources/**/*.js",
     "./resources/**/*.vue",
-    "./resources/**/*.blade.php",
     'node_modules/preline/dist/*.js'
   ],
   theme: {
