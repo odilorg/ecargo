@@ -19,7 +19,12 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    
+
+    //protected static ?string $navigationParentItem = 'Shipment';
+
     protected static ?string $navigationGroup = 'Categories';
+
 
 
     public static function form(Form $form): Form
