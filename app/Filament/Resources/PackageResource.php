@@ -34,6 +34,7 @@ class PackageResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Package Name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('tracking_number')
