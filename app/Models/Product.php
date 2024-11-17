@@ -16,9 +16,9 @@ class Product extends Model
         return $this->belongsTo(Package::class);
     }
 
-    public function category(): HasOne
+    public function category(): BelongsTo
     {
-        return $this->hasOne(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
 }

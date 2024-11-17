@@ -60,16 +60,21 @@ class PackageResource extends Resource
                                     ->relationship('category', 'name')
                                     ->searchable()
                                     ->preload()
-                                    ->live()
+                                    ->reactive()
                                     ->required(),
-                                Forms\Components\Select::make('subcategory_id')
-                                ->options(function (callable $get) {
-                                    $categoryId = $get('category_id');
-                                    return Subcategory::where('category_id', $categoryId)->pluck('name', 'id');
-                                })
-                                    ->searchable()
-                                    ->preload()
-                                    ->required(),
+                                // Subcategory field
+                Forms\Components\Select::make('subcategory_id')
+                ->label('Subcategory')
+                ->options(function (callable $get) {
+                    $categoryId = $get('category_id'); // Get the category_id dynamically
+                    if ($categoryId) {
+                        return Subcategory::where('category_id', $categoryId)->pluck('name', 'id');
+                    }
+                    return [];
+                })
+                ->searchable()
+                ->preload()
+                ->required(),
                                     
                                 Forms\Components\TextInput::make('product_name')
                                     ->required()
@@ -131,7 +136,7 @@ class PackageResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\ProductsRelationManager::class,
+          //  RelationManagers\ProductsRelationManager::class,
         ];
     }
 
