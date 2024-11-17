@@ -68,9 +68,11 @@ class ProductResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('category')
+                Tables\Columns\TextColumn::make('package.name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('sub_category')
+                    Tables\Columns\TextColumn::make('category.name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('subcategory.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('product_name')
                     ->searchable(),
