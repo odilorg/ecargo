@@ -62,7 +62,7 @@ class PackageResource extends Resource
                                     ->preload()
                                     ->live()
                                     ->required(),
-                                Forms\Components\Select::make('sub_category')
+                                Forms\Components\Select::make('subcategory_id')
                                 ->options(function (callable $get) {
                                     $categoryId = $get('category_id');
                                     return Subcategory::where('category_id', $categoryId)->pluck('name', 'id');
