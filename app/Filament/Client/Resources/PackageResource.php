@@ -1,23 +1,20 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Client\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Package;
-use Filament\Forms\Get;
-use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Subcategory;
 use Filament\Resources\Resource;
-use Illuminate\Support\Collection;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\PackageResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\PackageResource\RelationManagers;
-use App\Models\Subcategory;
+use App\Filament\Client\Resources\PackageResource\Pages;
+use App\Filament\Client\Resources\PackageResource\RelationManagers;
 
 class PackageResource extends Resource
 {
@@ -25,16 +22,14 @@ class PackageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Shipment';
+    protected static ?string $navigationLabel = 'Ожидаемые';
 
-    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Package Name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('tracking_number')
@@ -43,12 +38,8 @@ class PackageResource extends Resource
                 Forms\Components\TextInput::make('purchase_source')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('client_id')
-                    ->relationship('client', 'full_name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
-
+                Forms\Components\Hidden::make('client_id')
+                    ->default(auth()->id()),
                 Repeater::make('products')
                     ->relationship()
                     ->label('Declaration')
@@ -97,6 +88,17 @@ class PackageResource extends Resource
 
             ]);
     }
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['client_id'] = auth()->id();
+        return $data;
+    }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['client_id'] = auth()->id();
+        return $data;
+    }
 
     public static function table(Table $table): Table
     {
@@ -116,9 +118,7 @@ class PackageResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('purchase_source')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('client.full_name')
-                    ->numeric()
-                    ->sortable(),
+               
             ])
             ->filters([
                 //
@@ -136,7 +136,7 @@ class PackageResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //  RelationManagers\ProductsRelationManager::class,
+            //
         ];
     }
 
