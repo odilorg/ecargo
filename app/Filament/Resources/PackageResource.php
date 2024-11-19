@@ -116,7 +116,7 @@ class PackageResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('purchase_source')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('client.full_name')
+                Tables\Columns\TextColumn::make('client.name')
                     ->numeric()
                     ->sortable(),
             ])

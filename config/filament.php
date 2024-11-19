@@ -1,5 +1,8 @@
 <?php
 
+
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+
 return [
 
     /*
@@ -71,5 +74,21 @@ return [
 
     'livewire_loading_delay' => 'default',
     'home_url' => '/odilorg/login', // Set your desired home URL here
+
+    'panels' => [
+        'odilorg' => [
+            'path' => '/odilorg',
+            'middleware' => ['web', 'auth'], // Adjust as needed
+            'resources' => [
+                // Your panel resources
+            ],
+            'pages' => [
+                // Your panel pages
+            ],
+            'plugins' => [
+                FilamentEditProfilePlugin::make(),
+            ],
+        ],
+    ],
 
 ];
