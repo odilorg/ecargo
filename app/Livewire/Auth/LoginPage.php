@@ -23,7 +23,7 @@ public function save() {
         return;
     }
 
-    return redirect()->intended();
+    return redirect()->intended('/client');
 }
 
 
