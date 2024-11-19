@@ -17,10 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(LogoutResponseContract::class, LogoutResponse::class);
-        $this->app->singleton(
-            RegistrationResponse::class,
-            \App\Http\Responses\RegisterResponse::class
-        );
+        
     }
 
     /**

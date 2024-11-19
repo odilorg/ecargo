@@ -7,7 +7,10 @@ use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Navigation\MenuItem;
+
 use Filament\Support\Colors\Color;
+use App\Filament\Pages\Auth\Register;
+use App\Filament\Pages\Auth\EditProfile;
 use App\Livewire\CustomProfileComponent;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
@@ -33,7 +36,7 @@ class ClientPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->login()
-            ->registration()
+            ->registration(Register::class)
             ->passwordReset()
             ->profile()
             ->discoverResources(in: app_path('Filament/Client/Resources'), for: 'App\\Filament\\Client\\Resources')
@@ -60,33 +63,6 @@ class ClientPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugins([
-                FilamentEditProfilePlugin::make()
-               // ->slug('my-profile')
-                ->setTitle('My Profile')
-                ->setNavigationLabel('My Profile')
-                ->setNavigationGroup('Group Profile')
-                ->setIcon('heroicon-o-user')
-                ->setSort(10)
-               // ->canAccess(fn () => auth()->user()->id === 1)
-                ->shouldRegisterNavigation(false)
-                ->shouldShowDeleteAccountForm(false)
-               // ->shouldShowSanctumTokens()
-                ->shouldShowBrowserSessionsForm(
-                  //  fn() => auth()->user()->id === 1, //optional
-                        //OR
-                    true //optional
-                )
-                ->shouldShowAvatarForm()
-                
-            ])
-            ->userMenuItems([
-    'profile' => MenuItem::make()
-        ->label(fn() => auth()->user()->name)
-        ->url(fn (): string => EditProfilePage::getUrl())
-        ->icon('heroicon-m-user-circle')
-        //If you are using tenancy need to check with the visible method where ->company() is the relation between the user and tenancy model as you called
-        
-]);
+            ->profile(EditProfile::class);
     }
 }

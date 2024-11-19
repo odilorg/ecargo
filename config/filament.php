@@ -85,9 +85,7 @@ return [
             'pages' => [
                 // Your panel pages
             ],
-            'plugins' => [
-                FilamentEditProfilePlugin::make(),
-            ],
+            
         ],
     ],
 

@@ -59,10 +59,7 @@ class OdilorgPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->plugins([
-                FilamentEditProfilePlugin::make()
-                
             ]);
+            
     }
 }
