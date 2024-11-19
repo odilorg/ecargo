@@ -89,6 +89,8 @@ class AddressResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('address_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('first_name')
