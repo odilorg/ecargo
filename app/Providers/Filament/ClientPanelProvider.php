@@ -38,7 +38,7 @@ class ClientPanelProvider extends PanelProvider
             ->login()
             ->registration(Register::class)
             ->passwordReset()
-            ->profile()
+            //->profile(isSimple: false)
             ->discoverResources(in: app_path('Filament/Client/Resources'), for: 'App\\Filament\\Client\\Resources')
             ->discoverPages(in: app_path('Filament/Client/Pages'), for: 'App\\Filament\\Client\\Pages')
             ->pages([
@@ -63,6 +63,7 @@ class ClientPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->profile(EditProfile::class);
+           ->profile(EditProfile::class);
+            
     }
 }
