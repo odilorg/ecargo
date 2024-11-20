@@ -68,8 +68,7 @@ class AddressResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('extra_info')
                     ->maxLength(255),
-                Forms\Components\Hidden::make('client_id')
-                    ->default(auth()->id()),
+               
                 
             ]);
     }
@@ -128,11 +127,10 @@ class AddressResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('extra_info')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('client.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('full_name')
-                    ->searchable(),
+                
             ])
             ->filters([
                 //
