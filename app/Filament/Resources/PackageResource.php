@@ -9,15 +9,17 @@ use Filament\Forms\Get;
 use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Subcategory;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
+use Filament\Tables\Columns\SelectColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PackageResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PackageResource\RelationManagers;
-use App\Models\Subcategory;
 
 class PackageResource extends Resource
 {
@@ -48,6 +50,13 @@ class PackageResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
+                Select::make('status')
+                    ->options([
+                        'waiting' => 'Waiting',
+                        'arrived' => 'Arrived',
+                        'packing' => 'Packing',
+                        'sent' => 'Sent',
+                    ]),
 
                 Repeater::make('products')
                     ->relationship()
@@ -116,9 +125,16 @@ class PackageResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('purchase_source')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('client.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
+                SelectColumn::make('status')
+                    ->options([
+                        'waiting' => 'Waiting',
+                        'arrived' => 'Arrived',
+                        'packing' => 'Packing',
+                        'sent' => 'Sent',
+                    ]),
             ])
             ->filters([
                 //

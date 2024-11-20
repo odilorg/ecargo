@@ -11,9 +11,9 @@ class Package extends Model
 {
     use HasFactory;
 
-    public function client(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class);
     }
 
     public function products(): HasMany

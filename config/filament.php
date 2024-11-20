@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Filament\Resources\PackageResource;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 return [
@@ -74,7 +75,7 @@ return [
 
     'livewire_loading_delay' => 'default',
     'home_url' => '/odilorg/login', // Set your desired home URL here
-
+    
     'panels' => [
         'odilorg' => [
             'path' => '/odilorg',
@@ -87,6 +88,30 @@ return [
             ],
             
         ],
+        'client' => [
+        'path' => '/client',
+        'middleware' => ['web', 'auth'], // Add middleware for clients
+        'resources' => [
+            PackageResource::class, // Main resource
+        ],
+        'pages' => [
+            // Other pages
+        ],
+        'navigation' => [
+            // "Packages" for status = 'waiting'
+            [
+                'label' => 'Packages',
+                'url' => '/client/packages/waiting',
+                'icon' => 'heroicon-o-archive',
+            ],
+            // "Arrived" for status = 'packing'
+            [
+                'label' => 'Arrived',
+                'url' => '/client/packages/arrived',
+                'icon' => 'heroicon-o-check-circle',
+            ],
+        ],
+    ],
     ],
 
 ];

@@ -11,6 +11,7 @@ use App\Models\Subcategory;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
+use Filament\Navigation\NavigationItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Client\Resources\PackageResource\Pages;
@@ -18,6 +19,21 @@ use App\Filament\Client\Resources\PackageResource\RelationManagers;
 
 class PackageResource extends Resource
 {
+
+    public static function getNavigationItems(): array
+    {
+        return [
+            NavigationItem::make('Packages')
+                ->url('/client/packages/waiting')
+                ->icon('heroicon-o-rectangle-stack')
+                ->sort(1), // Order in the sidebar
+            NavigationItem::make('Arrived')
+                ->url('/client/packages/arrived')
+                ->icon('heroicon-o-rectangle-stack')
+                ->sort(2),
+        ];
+    }
+
     protected static ?string $model = Package::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
