@@ -82,7 +82,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('amount')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('package.client.full_name')
+                Tables\Columns\TextColumn::make('package.user.name')
                     ->numeric()
                     ->sortable(),
 
