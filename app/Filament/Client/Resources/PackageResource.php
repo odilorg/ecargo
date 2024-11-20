@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Subcategory;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
 use Filament\Navigation\NavigationItem;
@@ -20,25 +22,25 @@ use App\Filament\Client\Resources\PackageResource\RelationManagers;
 class PackageResource extends Resource
 {
 
-    public static function getNavigationItems(): array
-    {
-        return [
-            NavigationItem::make('Packages')
-                ->url('/client/packages/waiting')
-                ->icon('heroicon-o-rectangle-stack')
-                ->sort(1), // Order in the sidebar
-            NavigationItem::make('Arrived')
-                ->url('/client/packages/arrived')
-                ->icon('heroicon-o-rectangle-stack')
-                ->sort(2),
-        ];
-    }
+    // public static function getNavigationItems(): array
+    // {
+    //     return [
+    //         NavigationItem::make('Packages')
+    //             ->url('/client/packages')
+    //             ->icon('heroicon-o-rectangle-stack')
+    //             ->sort(1), // Order in the sidebar
+    //         NavigationItem::make('Arrived')
+    //             ->url('/client/packages?tableFilters[Waiting][isActive]=true')
+    //             ->icon('heroicon-o-rectangle-stack')
+    //             ->sort(2),
+    //     ];
+    // }
 
     protected static ?string $model = Package::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Ожидаемые';
+    protected static ?string $navigationLabel = 'Посылки';
 
 
     public static function form(Form $form): Form
@@ -54,7 +56,7 @@ class PackageResource extends Resource
                 Forms\Components\TextInput::make('purchase_source')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Hidden::make('client_id')
+                Forms\Components\Hidden::make('user_id')
                     ->default(auth()->id()),
                 Repeater::make('products')
                     ->relationship()
@@ -106,13 +108,13 @@ class PackageResource extends Resource
     }
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['client_id'] = auth()->id();
+        $data['user_id'] = auth()->id();
         return $data;
     }
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $data['client_id'] = auth()->id();
+        $data['user_id'] = auth()->id();
         return $data;
     }
 
@@ -134,11 +136,18 @@ class PackageResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('purchase_source')
                     ->searchable(),
-               
+                    // Tables\Columns\TextColumn::make('status')
+                    // ->searchable(),    
+
             ])
             ->filters([
-                //
+                // Filter::make('Waiting')->query(
+                //     function (Builder $query): Builder {
+                //         return $query->where('status', 'waiting');
+                //     }
+                // )
             ])
+            
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

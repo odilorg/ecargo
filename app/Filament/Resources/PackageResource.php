@@ -12,6 +12,8 @@ use Filament\Tables\Table;
 use App\Models\Subcategory;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Support\Facades\Log;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
@@ -45,8 +47,8 @@ class PackageResource extends Resource
                 Forms\Components\TextInput::make('purchase_source')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('client_id')
-                    ->relationship('client', 'full_name')
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
                     ->searchable()
                     ->preload()
                     ->required(),
@@ -137,7 +139,7 @@ class PackageResource extends Resource
                     ]),
             ])
             ->filters([
-                //
+                
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
