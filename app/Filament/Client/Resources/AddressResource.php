@@ -149,7 +149,11 @@ class AddressResource extends Resource
                 ]),
             ]);
     }
-
+    public static function getEloquentQuery(): Builder
+    {
+        // Filter data to only include records belonging to the logged-in user
+        return parent::getEloquentQuery()->where('user_id', auth()->id());
+    }
     public static function getRelations(): array
     {
         return [
