@@ -68,19 +68,23 @@ class AddressResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('extra_info')
                     ->maxLength(255),
+                Forms\Components\Hidden::make('user_id')
+                    ->default(auth()->id()),
                
                 
             ]);
     }
+
+    
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['client_id'] = auth()->id();
+        $data['user_id'] = auth()->id();
         return $data;
     }
     
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $data['client_id'] = auth()->id();
+        $data['user_id'] = auth()->id();
         return $data;
     }
 
@@ -130,7 +134,8 @@ class AddressResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                
+                Tables\Columns\TextColumn::make('full_name')
+                    ->searchable(),
             ])
             ->filters([
                 //

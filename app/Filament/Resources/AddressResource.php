@@ -25,8 +25,8 @@ class AddressResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('client_id')
-                    ->relationship('client', 'full_name')
+                Forms\Components\Select::make('user_id')
+                    ->relationship('client', 'name')
                     ->searchable()
                     ->preload()
                     ->required(),
