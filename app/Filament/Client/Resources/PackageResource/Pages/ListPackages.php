@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Client\Resources\PackageResource\Pages;
+
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,13 +23,13 @@ class ListPackages extends ListRecords
     {
         return [
             'Ожидаемые (' . $this->getStatusCount('waiting') . ')' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'waiting')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'waiting')->where('user_id', auth()->id())),
             'На складе (' . $this->getStatusCount('arrived') . ')' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'arrived')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'arrived')->where('user_id', auth()->id())),
             'На упаковке (' . $this->getStatusCount('packing') . ')' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'packing')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'packing')->where('user_id', auth()->id())),
             'Отправленные (' . $this->getStatusCount('sent') . ')' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'sent')),        
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'sent')->where('user_id', auth()->id())),
         ];
     }
     
@@ -40,6 +41,9 @@ class ListPackages extends ListRecords
      */
     protected function getStatusCount(string $status): int
     {
-        return \App\Models\Package::where('status', $status)->count();
+        // Explicitly include `user_id` filtering to ensure the counts respect user data
+        return \App\Models\Package::where('status', $status)
+            ->where('user_id', auth()->id())
+            ->count();
     }
 }
