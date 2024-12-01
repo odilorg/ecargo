@@ -133,13 +133,11 @@ class AddressResource extends Resource
                 Tables\Columns\TextColumn::make('id_number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('pinfl')
-                    ->numeric()
+                    //->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('extra_info')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
+               
                 Tables\Columns\TextColumn::make('full_name')
                     ->searchable(),
             ])
