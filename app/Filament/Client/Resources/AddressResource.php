@@ -2,16 +2,17 @@
 
 namespace App\Filament\Client\Resources;
 
-use App\Filament\Client\Resources\AddressResource\Pages;
-use App\Filament\Client\Resources\AddressResource\RelationManagers;
-use App\Models\Address;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Address;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Client\Resources\AddressResource\Pages;
+use App\Filament\Client\Resources\AddressResource\RelationManagers;
 
 class AddressResource extends Resource
 {
@@ -42,6 +43,7 @@ class AddressResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('house_number')
                     ->required()
+                    ->numeric()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('apartment_number')
                     ->required()
@@ -62,10 +64,14 @@ class AddressResource extends Resource
                 Forms\Components\TextInput::make('id_number')
                     ->label('Passport or ID #')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(20),
                 Forms\Components\TextInput::make('pinfl')
                     ->required()
-                    ->numeric(),
+                   // ->numeric()
+                    //->length(19)
+                    ->mask('9 999999 999 999 9')
+                      ->stripCharacters(' '),
+                   // View::make('components.pinfl-link'),
                 Forms\Components\TextInput::make('extra_info')
                     ->maxLength(255),
                 Forms\Components\Hidden::make('user_id')
