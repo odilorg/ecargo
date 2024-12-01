@@ -8,8 +8,10 @@ use App\Models\Address;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\View;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Placeholder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Client\Resources\AddressResource\Pages;
 use App\Filament\Client\Resources\AddressResource\RelationManagers;
@@ -65,10 +67,11 @@ class AddressResource extends Resource
                     ->label('Passport or ID #')
                     ->required()
                     ->maxLength(20),
+                  
                 Forms\Components\TextInput::make('pinfl')
                     ->required()
-                   // ->numeric()
-                    //->length(19)
+                  // ->helperText('http://www.googlwe.com')
+                  
                     ->mask('9 999999 999 999 9')
                       ->stripCharacters(' '),
                    // View::make('components.pinfl-link'),
@@ -76,6 +79,8 @@ class AddressResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->id()),
+                    Placeholder::make('')
+    ->content(new HtmlString('<a href="https://my.soliq.uz/searchtin/index?lang=ru" target="_blank" style="color: #007bff; text-decoration: underline;">ПИНФЛ кандай билиш</a>')),
                
                 
             ]);
